@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class SaveProjectRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true; //cualquier usuario puede crear un proyecto
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'title' => 'required',
+            'url' => 'required',
+            'description' => 'required'
+        ];
+    }
+    //personalizar los mensajes de campos requeridos
+    public function messages()
+    {
+        return [
+            'title.required' => 'El proyecto necesita un titulo'
+        ];
+    }
+}
