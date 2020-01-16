@@ -10,7 +10,7 @@ class UsersController extends Controller
     function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('roles:admin'); //con dos puntos pasamos los parametros al middleware
+        $this->middleware('roles:admin,moderador'); //con dos puntos pasamos los parametros al middleware
     }
     /**
      * Display a listing of the resource.

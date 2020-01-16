@@ -10,19 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use Illuminate\Support\Facades\Route;
 
-/*App\User::create([
-    'name'=>'Estudiante',
-    'email'=>'estudiante@gmail.com',
-    'password'=>bcrypt('estudiante123'),
-    'role'=>'estudiante'
-]);*/
+//App\User::create([
+//    'name'=>'Carla',
+//    'email'=>'carla@gmail.com',
+//    'password'=>bcrypt('carla123'),
+//    'role'=>'moderador',
+//    'role_id'=>1
+//]);
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
+
+Route::get('roles', function () {
+    return \App\Role::with('user')->get(); // llama al metodo user; hasOne devuelve solo un objeto de la relacion, hasMany devuelve un array de objetos relacionados. 
+});
 /*Route::get('prueba',function(){
     $nombre= "Ammiel";
     return view('prueba')->with('nombre',$nombre);
@@ -39,7 +45,7 @@ Route::get('/prueba-test/crear', 'PruebaController@create')->name('prueba.create
 Route::get('/prueba-test/{id}', 'PruebaController@show')->name('prueba.show');
 Route::get('/prueba-test/{id}/editar', 'PruebaController@edit')->name('prueba.edit');
 Route::patch('/prueba-test/{id}', 'PruebaController@update')->name('prueba.update');
-Route::delete('/prueba-test/{id}','PruebaController@destroy')->name('prueba.destroy');
+Route::delete('/prueba-test/{id}', 'PruebaController@destroy')->name('prueba.destroy');
 
 Route::get('contactanos', function () {
     return 'Seccion de contactos';
