@@ -11,7 +11,6 @@
     <script src='/js/app.js' defer></script>
     <!--la raiz / que es la carpeta publica en laravel, el atributo defer para que se ejecute al final de la carga-->
 </head>
-
 <body>
     <div id="app" class="d-flex flex-column h-screen justify-content-between">
         <header>

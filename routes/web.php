@@ -72,6 +72,9 @@ Route::delete('/portfolio/{project}', 'ProjectController@destroy')->name('projec
 
 //Usuarios
 Route::get('/usuarios', 'UsersController@index')->name('usuarios.index');
+Route::get('/usuarios/{id}/editar', 'UsersController@edit')->name('usuarios.edit');
+Route::put('/usuarios/{id}', 'UsersController@update')->name('usuarios.update');
+Route::delete('/usuarios/{id}', 'UsersController@destroy')->name('usuarios.destroy');
 
 Route::view('/contact', 'contact')->name('contact');
 Route::post('contact', 'MenssageController@store')->name('messages.store');
