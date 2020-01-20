@@ -53,11 +53,16 @@ class User extends Authenticatable
     public function hasRoles(array $roles)
     {
         foreach ($roles as $role) {
-            foreach($this->roles as $userRole){
+            foreach ($this->roles as $userRole) {
                 if ($userRole->name === $role)
-                return true;
+                    return true;
             }
         }
         return false;
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRoles(['admin']);
     }
 }

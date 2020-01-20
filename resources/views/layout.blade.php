@@ -36,13 +36,12 @@
                             @guest
                             <!--guest =invitado -->
                             <li class="nav-item"><a class="nav-link" href="{{route('login')}}">Login</a></li>
-                            @else
-                            <li class="nav-item"><a class="nav-link" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar sesion</a></li>
-                            <li class="dropdown">
+                            @else                            
+                            <li class="nav-item nav-link dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth()->user()->name}}<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu">                                    
+                                    <li><a class="nav-link" href="/usuarios/{{auth()->user()->id}}/editar">Mi cuenta</a></li>
                                     <li><a class="nav-link" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Cerrar Sesion</a></li>
-                                    <li><a href="#">Another action</a></li>
                                 </ul>
                             </li>
                             @endguest                            
