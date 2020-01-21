@@ -8,6 +8,7 @@
               <th>Nombre</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Role</th>
               <th>Acciones</th>
               </tr>
         </thead>
@@ -18,6 +19,7 @@
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <!--<td>{$user->role->display_name}</td>-->
+                <td>{{$user->roles->pluck('display_name')->implode(',')}}</td>
                 <td>
                     @foreach ($user->roles as $role)
                     {{$role->display_name}}

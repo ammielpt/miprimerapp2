@@ -9,6 +9,7 @@ class Role extends Model
     //
     public function user()
     {
+        // Role have many users
         //return $this->hasOne(User::class);
         return $this->hasMany(User::class);
     }

@@ -39,6 +39,7 @@ class User extends Authenticatable
 
     public function roles()
     {
+        // user have many roles
         //return $this->belongsTo(Role::class);
         return $this->belongsToMany(Role::class, 'assigned_roles'); // assigned_roles nombre de la tabla muchos a muchos
     }
@@ -52,7 +53,9 @@ class User extends Authenticatable
     //}
     public function hasRoles(array $roles)
     {
+        //return $this->roles->pluck('name')->intersect($roles)->count(); // esto si es ideal
         foreach ($roles as $role) {
+            //return $this->roles->pluck('name')->contains($role); // esto no es ideal ya que en la primera fallará
             foreach ($this->roles as $userRole) {
                 if ($userRole->name === $role)
                     return true;
