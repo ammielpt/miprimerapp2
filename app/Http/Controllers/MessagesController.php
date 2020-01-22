@@ -2,47 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\MessageReceive;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Message;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class MenssageController extends Controller
+class MessagesController extends Controller
 {
+
+
     function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['create', 'store']]);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $messages = DB::table('messages')->get();
+        //Trabajando con QueryBuilder
+        //$messages=DB::table('messages')->get();
+
+        //Trabajando con eloquent
+        $messages = Message::all();
         return view('messages.index', compact('messages'));
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('messages.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        //Acceder al valor del campo
-        $request->validate([
-            'nombre' => 'required',
-            'email' => 'required|email',
-            'mensaje' => 'required|min:3'
-        ]);
-        DB::table('messages')->insert([
-            "nombre" => $request->input("nombre"),
-            "email" => $request->input("email"),
-            "mensaje" => $request->input("mensaje"),
-            "created_at" => Carbon::now(),
-            "updated_at" => Carbon::now()
-        ]);
-        //return $request->get('nombre');
-        //Enviar email
-        Mail::to('ammiel16@gmail.com')->send(new MessageReceive($request));
-        //return new MessageReceive($request);  imprimir rapidamente el mensaje del correo en html solo retornar el Messagereceive
-        //return 'mensaje recibido';
-        return back()->with('status', 'Recibimos tu mensaje te responderemos en menos de 24 horas'); // redirecciona a la ultima peticion que hicimos, en este caso al mismo formulario
-        //con el metodo with guardamos los mensajes en la sesion y lo mostramos con el metodo session()
+        //return $request->input('nombre');
+        //return $request->all();
+        // DB con QueryBuilder        
+        //DB::table('messages')->insert([
+        //    "nombre" => $request->input("nombre"),
+        //    "email" => $request->input("email"),
+        //    "phone" => "123456",
+        //    "mensaje" => $request->input("mensaje"),
+        //    "created_at" => Carbon::now(),
+        //    "updated_at" => Carbon::now()
+        //]);
+
+        //Con Eloquent primera forma
+        //$message = new Message();
+        //$message->nombre = $request->input('nombre');
+        //$message->email = $request->input('email');
+        //$message->mensaje = $request->input('mensaje');
+        //$message->save();
+
+        //Con Eloquent segunda forma, ver fillable en el model Message
+        Message::create($request->all());
+
+        //retornando a la vista donde se muestran todos los mensajes
+        return redirect()->route('messages.create');
     }
+
     /**
      * Display the specified resource.
      *
@@ -61,6 +92,7 @@ class MenssageController extends Controller
         $message = Message::findOrFail($id);
         return view('messages.show', compact("message"));
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -94,12 +126,14 @@ class MenssageController extends Controller
         //    "mensaje" => $request->input("mensaje"),
         //    "updated_at" => Carbon::now()
         //]);
+
         //primero encontramos el registro, luego actualizamos
         $message = Message::findOrFail($id);
         $message->update($request->all());
         //Redireccionamos
         return redirect()->route('messages.index');
     }
+
     /**
      * Remove the specified resource from storage.
      *

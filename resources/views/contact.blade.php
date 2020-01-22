@@ -18,9 +18,9 @@
     </ul>
     @endif-->                
                 <div class="form-group">
-                    <label for='name'>Nombre</label>
-                    <input class="form-control bg-light shadow-sm @error('name') is-invalid @else border-0 @enderror" type="text" id="name" name="name" placeholder="Nombre" value="{{old('name')}}"><br />
-                    @error('name')
+                    <label for='nombre'>Nombre</label>
+                    <input class="form-control bg-light shadow-sm @error('nombre') is-invalid @else border-0 @enderror" type="text" id="nombre" name="nombre" placeholder="Nombre" value="{{old('nombre')}}"><br />
+                    @error('nombre')
                     <span class="invalid-feedback" role="alert">
                         <strong>
                             {{$message}}
@@ -51,9 +51,9 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for='content'>Asunto</label>
-                    <textarea class="form-control bg-light shadow-sm @error('content') is-invalid @else border-0 @enderror" name="content" placeholder="Mensaje">{{old('content')}}</textarea><br />
-                    @error('content')
+                    <label for='mensaje'>Asunto</label>
+                    <textarea class="form-control bg-light shadow-sm @error('mensaje') is-invalid @else border-0 @enderror" name="mensaje" placeholder="Mensaje">{{old('mensaje')}}</textarea><br />
+                    @error('mensaje')
                     <span class="invalid-feedback" role="alert">
                         <strong>
                             {{$message}}

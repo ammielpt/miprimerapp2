@@ -33,10 +33,11 @@
                                 @endif
                             @endif
                             <li class="nav-item"><a class="nav-link" href="/contact">Contacto</a></li>                            
-                            @guest
+                            @guest                            
                             <!--guest =invitado -->
                             <li class="nav-item"><a class="nav-link" href="{{route('login')}}">Login</a></li>
-                            @else                            
+                            @else
+                            <li class="nav-item"><a class="nav-link" href="{{route('messages.index')}}">Mensajes</a></li>                             
                             <li class="nav-item nav-link dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth()->user()->name}}<b class="caret"></b></a>
                                 <ul class="dropdown-menu">                                    

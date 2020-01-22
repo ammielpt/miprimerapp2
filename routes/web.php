@@ -80,6 +80,12 @@ Route::delete('/usuarios/{id}', 'UsersController@destroy')->name('usuarios.destr
 Route::view('/contact', 'contact')->name('contact');
 Route::post('contact', 'MenssageController@store')->name('messages.store');
 
+Route::get('messages', 'MenssageController@index')->name('messages.index');
+Route::get('messages/{id}/editar', 'MenssageController@edit')->name('messages.edit');
+Route::put('messages/{id}', 'MenssageController@update')->name('messages.update');
+Route::get('messages/{id}', 'MenssageController@show')->name('messages.show');
+Route::delete('messages/{id}', 'MenssageController@destroy')->name('messages.destroy');
+
 Auth::routes(); // esta linea registra las siguientes rutas:
 
 // Desabilita la opcion registrar
