@@ -17,7 +17,8 @@ class MenssageController extends Controller
     }
     public function index()
     {
-        $messages = DB::table('messages')->get();
+        //$messages = DB::table('messages')->get();
+        $messages = Message::get();
         return view('messages.index', compact('messages'));
     }
     public function store(Request $request)
@@ -28,19 +29,30 @@ class MenssageController extends Controller
             'email' => 'required|email',
             'mensaje' => 'required|min:3'
         ]);
-        DB::table('messages')->insert([
+        //$message=DB::table('messages')->insert([
+        //    "nombre" => $request->input("nombre"),
+        //    "email" => $request->input("email"),
+        //    "mensaje" => $request->input("mensaje"),
+        //    "created_at" => Carbon::now(),
+        //    "updated_at" => Carbon::now()
+        //]);s
+        $message = Message::create([
             "nombre" => $request->input("nombre"),
             "email" => $request->input("email"),
-            "mensaje" => $request->input("mensaje"),
-            "created_at" => Carbon::now(),
-            "updated_at" => Carbon::now()
+            "mensaje" => $request->input("mensaje")
         ]);
+        //auth()->check()->messages()->create($request->all());
+        //$message->user_id=auth()->id();
+        //$message->save();
+        if (auth()->check()) {
+            auth()->user()->messages()->save($message);
+        }
         //return $request->get('nombre');
         //Enviar email
         Mail::to('ammiel16@gmail.com')->send(new MessageReceive($request));
         //return new MessageReceive($request);  imprimir rapidamente el mensaje del correo en html solo retornar el Messagereceive
         //return 'mensaje recibido';
-        return back()->with('status', 'Recibimos tu mensaje te responderemos en menos de 24 horas'); // redirecciona a la ultima peticion que hicimos, en este caso al mismo formulario
+        //return back()->with('status', 'Recibimos tu mensaje te responderemos en menos de 24 horas'); // redirecciona a la ultima peticion que hicimos, en este caso al mismo formulario
         //con el metodo with guardamos los mensajes en la sesion y lo mostramos con el metodo session()
     }
     /**

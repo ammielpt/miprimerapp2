@@ -16,7 +16,7 @@
         <label for="mensaje">Mensaje
             <textarea name="mensaje">{{$message->mensaje}}</textarea>
             {!!$errors->first('mensaje', '<span class=error>:message</span>')!!}
-        </label><br /><br />
+        </label><br /><br />        
         <input type="submit" value="Enviar">
     </form>
 @endsection

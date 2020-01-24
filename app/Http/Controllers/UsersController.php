@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Policies\UserPolicy;
 use App\Http\Requests\UpdateUserRequest;
+use App\Role;
 
 class UsersController extends Controller
 {
@@ -69,7 +70,9 @@ class UsersController extends Controller
         //       
         $user = User::findOrFail($id);
         $this->authorize('edit', $user);
-        return view('users.edit', compact('user'));
+        //$roles= Role::all();
+        $roles = Role::pluck('display_name', 'id');
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -81,10 +84,13 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
+        //return $request->all();
         //
         $user = User::findOrFail($id);
         $this->authorize('update', $user);
         $user->update($request->all());
+        //$user->roles()->attach($request->roles); duplica valores mejor es usar metodo sync
+        $user->roles()->sync($request->roles);
         return back()->with('info', 'Usuario actualizado');
     }
 

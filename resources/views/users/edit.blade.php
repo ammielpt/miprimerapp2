@@ -30,6 +30,16 @@
             </span>
             @enderror
         </div>
+        <div class="checkbox">
+            @foreach ($roles as $id=>$name)
+            <label>
+                <input type="checkbox" 
+                value="{{$id}}"
+                {{$user->roles->pluck('id')->contains($id)?'checked':''}}
+                 name="roles[]">{{$name}}
+              </label>
+            @endforeach      
+          </div> 
         <button class="btn btn-primary btn-lg btn-block">Enviar</button>
     </form>
 @endsection
