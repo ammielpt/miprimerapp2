@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Policies\UserPolicy;
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
+use Illuminate\Support\Facades\App;
 
 class UsersController extends Controller
 {
@@ -34,6 +36,9 @@ class UsersController extends Controller
     public function create()
     {
         //
+        $user = new User();
+        $roles = Role::pluck('display_name', 'id');
+        return view('users.create', compact('roles', 'user'));
     }
 
     /**
@@ -42,9 +47,14 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        //
+        //return $request->all();
+        $user = User::create($request->all());
+        //$user->password= bcrypt($request->password);
+        //$user->save();
+        $user->roles()->attach($request->roles);
+        return  redirect()->route('usuarios.index');
     }
 
     /**
@@ -84,11 +94,10 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        //return $request->all();
         //
         $user = User::findOrFail($id);
         $this->authorize('update', $user);
-        $user->update($request->all());
+        $user->update($request->only('name', 'email'));
         //$user->roles()->attach($request->roles); duplica valores mejor es usar metodo sync
         $user->roles()->sync($request->roles);
         return back()->with('info', 'Usuario actualizado');
