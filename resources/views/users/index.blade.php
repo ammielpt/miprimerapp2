@@ -10,6 +10,7 @@
               <th>Email</th>
               <th>Role</th>
               <th>Role</th>
+              <th>Notas</th>
               <th>Acciones</th>
               </tr>
         </thead>
@@ -26,6 +27,7 @@
                     {{$role->display_name}}
                     @endforeach
                 </td>
+                <td>{{$user->note->body??''}}</td>
                 <td>
                     <a class="btn btn-info btn-xs" href="{{route('usuarios.edit',$user->id)}}">Editar</a>
                     <form style="display:inline" method="POST" action="{{route('usuarios.destroy',$user->id)}}">
