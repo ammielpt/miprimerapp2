@@ -83,4 +83,9 @@ class User extends Authenticatable
         //return $this->hasOne(Note::class);
         return $this->morphOne(Note::class, 'notable');
     }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable')->withTimestamps();
+    }
 }

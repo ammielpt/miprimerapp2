@@ -9,6 +9,7 @@
             <th>Email</th>
             <th>Mensaje</th>
             <th>Notas</th>
+            <th>Etiquetas</th>
             <th>Acciones</th>
         </thead>
         <tbody>
@@ -27,7 +28,8 @@
                   <td>{{$message->email}}</td>
                  @endif
                 <td><a href="{{route('messages.show',$message->id)}}">{{$message->mensaje}}</a></td>
-                <td>{{$message->note->body?? ''}}</td>                
+                <td>{{$message->note->body?? ''}}</td>  
+                <td>{{$message->tags->pluck('name')->implode(',')?? ''}}</td>               
                 <td><a href="{{route('messages.edit', $message->id)}}">Editar</a>
                     <form style="display: inline;" action="{{route('messages.destroy', $message->id)}}" method="POST">
                         {!!method_field('DELETE')!!}

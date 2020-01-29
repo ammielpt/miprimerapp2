@@ -11,6 +11,7 @@
               <th>Role</th>
               <th>Role</th>
               <th>Notas</th>
+              <th>Etiquetas</th>
               <th>Acciones</th>
               </tr>
         </thead>
@@ -28,6 +29,7 @@
                     @endforeach
                 </td>
                 <td>{{$user->note->body??''}}</td>
+                <td>{{$user->tags->pluck('name')->implode(',')?? ''}}</td>
                 <td>
                     <a class="btn btn-info btn-xs" href="{{route('usuarios.edit',$user->id)}}">Editar</a>
                     <form style="display:inline" method="POST" action="{{route('usuarios.destroy',$user->id)}}">
