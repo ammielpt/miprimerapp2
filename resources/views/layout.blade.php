@@ -36,6 +36,11 @@
                             @guest                            
                             <!--guest =invitado -->
                             <li class="nav-item"><a class="nav-link" href="{{route('login')}}">Login</a></li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
                             @else
                             <li class="nav-item"><a class="nav-link" href="{{route('messages.index')}}">Mensajes</a></li>                             
                             <li class="nav-item nav-link dropdown">

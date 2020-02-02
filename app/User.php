@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -37,10 +38,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function setPasswordAttribute($password)
+    /*public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
-    }
+    }*/
     public function roles()
     {
         // user have many roles
@@ -87,5 +88,16 @@ class User extends Authenticatable
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable')->withTimestamps();
+    }
+     
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }
