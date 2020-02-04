@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Message;
+use App\Event\MessageWasReceived;
+use App\User;
 
 class MenssageController extends Controller
 {
@@ -35,7 +37,7 @@ class MenssageController extends Controller
         //    "mensaje" => $request->input("mensaje"),
         //    "created_at" => Carbon::now(),
         //    "updated_at" => Carbon::now()
-        //]);s
+        //]);
         $message = Message::create([
             "nombre" => $request->input("nombre"),
             "email" => $request->input("email"),
@@ -47,12 +49,15 @@ class MenssageController extends Controller
         if (auth()->check()) {
             auth()->user()->messages()->save($message);
         }
+
+        //$message es opcional solo estoy usando $request
+        event(new MessageWasReceived($message, $request));
         //return $request->get('nombre');
         //Enviar email
-        Mail::to('ammiel16@gmail.com')->send(new MessageReceive($request));
+        //Mail::to('ammiel16@gmail.com')->send(new MessageReceive($request));
         //return new MessageReceive($request);  imprimir rapidamente el mensaje del correo en html solo retornar el Messagereceive
         //return 'mensaje recibido';
-        //return back()->with('status', 'Recibimos tu mensaje te responderemos en menos de 24 horas'); // redirecciona a la ultima peticion que hicimos, en este caso al mismo formulario
+        return back()->with('status', 'Recibimos tu mensaje te responderemos en menos de 24 horas'); // redirecciona a la ultima peticion que hicimos, en este caso al mismo formulario
         //con el metodo with guardamos los mensajes en la sesion y lo mostramos con el metodo session()
     }
     /**
