@@ -1,5 +1,6 @@
 @extends('layout')
 @section('content')
+    <img src="{{Storage::url($user->avatar)}}" width="100" height="100">
     <h1>{{$user->name}}</h1>
     <table class="table">
         <tr>

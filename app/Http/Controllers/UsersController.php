@@ -49,8 +49,13 @@ class UsersController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
+        $user = (new User)->fill($request->all());
         //return $request->all();
-        $user = User::create($request->all());
+        //$user = User::create($request->all()); user fill metodo para llenar una instancia del user con atributos y ahorrarnos el acceso a la BD mediante create
+        if ($request->hasFile('avatar')) {
+            $user->avatar = $request->file('avatar')->store('public');
+        }
+        $user->save();
         //$user->password= bcrypt($request->password);
         //$user->save();
         $user->roles()->attach($request->roles);
@@ -97,6 +102,9 @@ class UsersController extends Controller
         //
         $user = User::findOrFail($id);
         $this->authorize('update', $user);
+        if ($request->hasFile('avatar')) {
+            $user->avatar = $request->file('avatar')->store('public');
+        }
         $user->update($request->only('name', 'email'));
         //$user->roles()->attach($request->roles); duplica valores mejor es usar metodo sync
         $user->roles()->sync($request->roles);

@@ -25,9 +25,10 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'avatar' => 'required|image',
             'email' => 'required|unique:users,email,' . $this->route('id'),
             'password' => 'required|confirmed', // 'campo'  'campo_confirmation'
-            'roles'=> 'required'
+            'roles' => 'required'
         ];
     }
 }

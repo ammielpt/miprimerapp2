@@ -1,4 +1,10 @@
 {!!csrf_field()!!}
+<p>
+    <label for="avatar">
+        <input type="file" name="avatar">
+        {!!$errors->first('avatar', '<span class=error>:message</span>')!!}
+    </label>
+</p>
 <div class="form-group">
     <label for='name'>Nombre</label>
     <input class="form-control bg-light shadow-sm @error('name') is-invalid @else border-0 @enderror" type="text" id="name" name="name" placeholder="Nombre" value="{{old('name',$user->name)}}"><br />
